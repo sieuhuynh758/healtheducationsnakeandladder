@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Snake & Ladder: Healthy Lifestyle Edition</title>
+  <style>
+    :root {
+      --win11-bg: #f3f3f3;
+      --win11-accent: #0078d4;
+      --win11-accent-hover: #106ebe;
+      --win11-card: #ffffff;
+      --win11-text: #323130;
+      --win11-border: #e5e5e5;
+      --win11-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.08), 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+      --win11-radius: 8px;
+      --win11-radius-sm: 6px;
+      --win11-radius-lg: 12px;
+      --win11-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    body {
+      font-family: 'Segoe UI Variable', system-ui, -apple-system, sans-serif;
+      background: var(--win11-bg);
+      color: var(--win11-text);
+      margin: 0;
+      padding: 0;
+      line-height: 1.5;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    
+    h1 {
+      font-weight: 600;
+      font-size: 32px;
+      margin-bottom: 24px;
+      color: var(--win11-text);
+      text-align: center;
+    }
+    
+    .game-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      background: var(--win11-card);
+      padding: 20px;
+      border-radius: var(--win11-radius-lg);
+      box-shadow: var(--win11-shadow);
+      border: 1px solid var(--win11-border);
+    }
+    
+    .game-controls {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+    
+    .game-board {
+      background: var(--win11-card);
+      border-radius: var(--win11-radius-lg);
+      padding: 24px;
+      box-shadow: var(--win11-shadow);
+      border: 1px solid var(--win11-border);
+      margin-bottom: 24px;
+    }
+    
+    table {
+      border-collapse: collapse;
+      margin: 0 auto;
+      border-radius: var(--win11-radius);
+      overflow: hidden;
+    }
+    
+    td {
+      width: 60px;
+      height: 60px;
+      border: 1px solid var(--win11-border);
+      text-align: center;
+      vertical-align: middle;
+      position: relative;
+      font-size: 14px;
+      font-weight: 500;
+      transition: var(--win11-transition);
+    }
+    
+    td:hover {
+      background-color: rgba(0, 120, 212, 0.05);
+    }
+    
+    .player {
+      font-size: 11px;
+      color: white;
+      padding: 3px 6px;
+      border-radius: 12px;
+      margin: 2px;
+      display: inline-block;
+      font-weight: 600;
+      min-width: 24px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+    
+    .p1 { background: #e81123; }
+    .p2 { background: #0078d4; }
+    .p3 { background: #107c10; }
+    .p4 { background: #ff8c00; }
+    
+    #dice {
+      font-size: 24px;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    #roll {
+      font-weight: 600;
+      background: var(--win11-card);
+      padding: 6px 12px;
+      border-radius: var(--win11-radius-sm);
+      border: 1px solid var(--win11-border);
+      min-width: 36px;
+      text-align: center;
+    }
+    
+    button {
+      background-color: var(--win11-accent);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: var(--win11-radius-sm);
+      font-family: 'Segoe UI Variable';
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--win11-transition);
+      box-shadow: var(--win11-shadow);
+    }
+    
+    button:hover {
+      background-color: var(--win11-accent-hover);
+      transform: translateY(-1px);
+    }
+    
+    button:active {
+      transform: translateY(0);
+    }
+    
+    .message {
+      font-size: 15px;
+      margin: 16px 0;
+      padding: 16px;
+      background: var(--win11-card);
+      border-radius: var(--win11-radius-lg);
+      box-shadow: var(--win11-shadow);
+      text-align: left;
+      border: 1px solid var(--win11-border);
+    }
+    
+    .question-box {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--win11-card);
+      border: 1px solid var(--win11-border);
+      padding: 28px;
+      z-index: 1000;
+      display: none;
+      width: 500px;
+      max-width: 90%;
+      border-radius: var(--win11-radius-lg);
+      box-shadow: var(--win11-shadow);
+    }
+    
+    .question-box h3 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 24px;
+      color: var(--win11-text);
+    }
+    
+    .options-container {
+      display: grid;
+      gap: 12px;
+    }
+    
+    .option {
+      padding: 12px 16px;
+      background: var(--win11-bg);
+      border: none;
+      border-radius: var(--win11-radius-sm);
+      transition: var(--win11-transition);
+      text-align: left;
+      font-size: 15px;
+      cursor: pointer;
+    }
+    
+    .option:hover {
+      background: #e5e5e5;
+      transform: translateX(4px);
+    }
+    
+    .player-status {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+    }
+    
+    .player-card {
+      background: var(--win11-card);
+      padding: 16px;
+      border-radius: var(--win11-radius);
+      box-shadow: var(--win11-shadow);
+      min-width: 140px;
+      border: 1px solid var(--win11-border);
+      transition: var(--win11-transition);
+    }
+    
+    .player-card.active {
+      border: 2px solid var(--win11-accent);
+      transform: translateY(-4px);
+    }
+    
+    .player-name {
+      font-weight: 600;
+      margin-bottom: 6px;
+      font-size: 15px;
+    }
+    
+    .player-pos {
+      font-size: 14px;
+      color: #666;
+    }
+    
+    .win11-accent {
+      color: var(--win11-accent);
+      font-weight: 600;
+    }
+    
+    .ladder-start {
+      background-color: rgba(0, 120, 212, 0.08);
+    }
+    
+    .snake-start {
+      background-color: rgba(232, 17, 35, 0.08);
+    }
+    
+    .message-cell {
+      background-color: rgba(16, 124, 16, 0.08);
+    }
+    
+    .health-tip {
+      font-size: 13px;
+      color: #666;
+      margin-top: 4px;
+      font-style: italic;
+    }
+    
+    @media (max-width: 768px) {
+      .game-header {
+        flex-direction: column;
+        gap: 16px;
+      }
+      
+      .player-status {
+        flex-wrap: wrap;
+      }
+      
+      td {
+        width: 40px;
+        height: 40px;
+        font-size: 12px;
+      }
+    }
+    
+    /* Windows 11 24H2 animation */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .animate-fade {
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="animate-fade">Snake & Ladder: Healthy Lifestyle Edition</h1>
+    
+    <div class="game-header animate-fade" style="animation-delay: 0.1s">
+      <div class="game-controls">
+        <div id="dice">🎲 Roll: <span id="roll">-</span></div>
+        <button onclick="rollDice()">Roll Dice</button>
+      </div>
+      <div class="player-status" id="playerStatus"></div>
+    </div>
+    
+    <div class="game-board animate-fade" style="animation-delay: 0.2s">
+      <div id="board"></div>
+    </div>
+    
+    <div class="message animate-fade" id="message" style="animation-delay: 0.3s">
+      Welcome to Healthy Lifestyle Edition! Player 1 starts first.<br>
+      <span class="health-tip">Tip: Answer questions correctly to advance and learn about healthy living.</span>
+    </div>
+    
+    <div class="question-box" id="questionBox">
+      <h3 id="questionText">Question?</h3>
+      <div class="options-container" id="options"></div>
+    </div>
+  </div>
+
+  <script>
+    const players = [
+      { id: 1, name: "Player 1", pos: 0 },
+      { id: 2, name: "Player 2", pos: 0 },
+      { id: 3, name: "Player 3", pos: 0 },
+      { id: 4, name: "Player 4", pos: 0 }
+    ];
+    let currentPlayer = 0;
+    let pendingRoll = 0;
+
+    const ladders = { 27: 74, 80: 100 };
+    const snakes = { 87: 24 };
+    const messages = {
+      5: "Avoid peer pressure on Alcohol!",
+      10: "Did you know? Tobacco kills 8M/year.",
+      15: "Balance screen time to stay healthy.",
+      20: "Alcohol affects your brain and liver.",
+      30: "Quit smoking = Longer life.",
+      45: "Digital detox boosts mental health.",
+      65: "Healthy habits = Happy life.",
+      87: "Oh no! Addiction relapse! Slide down!",
+      100: "You win! Healthy life ahead!"
+    };
+
+    const questions = [
+      {
+        q: "How does alcohol affect the body?",
+        a: [
+          "Alcohol affects the body by weakening brain function, disrupting sleep, and damaging organs.",
+          "Alcohol improves concentration and physical performance.",
+          "Alcohol has no significant effects on the body when consumed moderately.",
+          "Alcohol strengthens the immune system and helps fight diseases."
+        ],
+        correct: 0,
+        explanation: "Alcohol primarily affects the central nervous system, impairing brain function, and can damage the liver, heart, and pancreas with prolonged use."
+      },
+      {
+        q: "Why can an adult drink alcohol, but a young person can't?",
+        a: [
+          "Adults can drink alcohol because their brains and bodies have fully developed, while young people's systems are still developing.",
+          "Young people process alcohol faster than adults, making it dangerous.",
+          "Alcohol tastes better to adults than to young people.",
+          "There's no real difference - it's just a social convention."
+        ],
+        correct: 0,
+        explanation: "The adolescent brain continues developing until about age 25. Alcohol can interfere with this development, potentially causing long-term cognitive problems."
+      },
+      {
+        q: "What are some common respiratory issues related to smoking?",
+        a: [
+          "Chronic cough, bronchitis, emphysema, and chronic obstructive pulmonary disease (COPD).",
+          "Improved lung capacity and stronger breathing muscles.",
+          "Reduced risk of asthma and seasonal allergies.",
+          "No significant respiratory effects from smoking."
+        ],
+        correct: 0,
+        explanation: "Smoking damages the lungs' natural cleaning system, leading to inflammation, reduced lung function, and serious chronic conditions."
+      },
+      {
+        q: "How does smoking affect the heart and blood vessels?",
+        a: [
+          "It increases the risk of heart disease, high blood pressure, and stroke by narrowing blood vessels and raising cholesterol levels.",
+          "Smoking improves blood circulation and heart efficiency.",
+          "It has no effect on cardiovascular health.",
+          "Smoking lowers blood pressure and reduces heart rate."
+        ],
+        correct: 0,
+        explanation: "Chemicals in tobacco smoke damage the structure and function of blood vessels, increasing the workload on the heart."
+      },
+      {
+        q: "What are the risks of excessive internet usage?",
+        a: [
+          "Sleep disturbances, reduced physical activity, eye strain, and social isolation.",
+          "Improved multitasking abilities and better memory.",
+          "Stronger eyesight from screen exposure.",
+          "Better social skills from online interactions."
+        ],
+        correct: 0,
+        explanation: "Excessive screen time can disrupt circadian rhythms, reduce face-to-face social skills, and contribute to sedentary lifestyle problems."
+      },
+      {
+        q: "How can you maintain healthy internet usage habits?",
+        a: [
+          "Set time limits, take regular breaks, and balance online/offline activities.",
+          "Use multiple devices simultaneously to maximize efficiency.",
+          "Stay online as much as possible to stay connected.",
+          "Only use the internet late at night when others are asleep."
+        ],
+        correct: 0,
+        explanation: "Conscious management of screen time helps prevent negative effects while allowing beneficial use of technology."
+      }
+    ];
+
+    function createBoard() {
+      const boardDiv = document.getElementById("board");
+      let html = "<table>";
+      let num = 100;
+      for (let row = 0; row < 10; row++) {
+        html += "<tr>";
+        let rowCells = [];
+        for (let col = 0; col < 10; col++) {
+          let cellClass = "";
+          if (ladders[num]) cellClass = "ladder-start";
+          if (snakes[num]) cellClass = "snake-start";
+          if (messages[num]) cellClass = "message-cell";
+          
+          let square = `<td id="cell${num}" class="${cellClass}">${num}<br><div id="p${num}"></div></td>`;
+          rowCells.push(square);
+          num--;
+        }
+        if (row % 2 === 0) rowCells.reverse();
+        html += rowCells.join("");
+        html += "</tr>";
+      }
+      html += "</table>";
+      boardDiv.innerHTML = html;
+      updatePlayers();
+      updatePlayerStatus();
+    }
+
+    function rollDice() {
+      document.querySelector('button').disabled = true;
+      pendingRoll = Math.floor(Math.random() * 6) + 1;
+      document.getElementById("roll").textContent = pendingRoll;
+      document.getElementById("message").innerHTML = 
+        `<span class="win11-accent">${players[currentPlayer].name}</span> rolled a ${pendingRoll}. <span class="health-tip">Answer correctly to move forward!</span>`;
+      
+      // Add dice rolling animation
+      const diceElement = document.querySelector('#dice');
+      diceElement.style.animation = 'none';
+      void diceElement.offsetWidth; // Trigger reflow
+      diceElement.style.animation = 'fadeIn 0.3s ease-out';
+      
+      setTimeout(showQuestion, 800);
+    }
+
+    function showQuestion() {
+      const qIndex = Math.floor(Math.random() * questions.length);
+      const q = questions[qIndex];
+      const box = document.getElementById("questionBox");
+      document.getElementById("questionText").textContent = q.q;
+
+      const optsDiv = document.getElementById("options");
+      optsDiv.innerHTML = "";
+      
+      // Shuffle options
+      const shuffledOptions = [...q.a].sort(() => Math.random() - 0.5);
+      
+      shuffledOptions.forEach((opt, i) => {
+        const btn = document.createElement("button");
+        btn.textContent = opt;
+        btn.className = "option";
+        btn.onclick = () => checkAnswer(opt === q.a[q.correct], q.explanation);
+        optsDiv.appendChild(btn);
+      });
+
+      box.style.display = "block";
+    }
+
+    function checkAnswer(correct, explanation) {
+      document.getElementById("questionBox").style.display = "none";
+      document.querySelector('button').disabled = false;
+      
+      let player = players[currentPlayer];
+      let msg = "";
+
+      if (correct) {
+        let newPos = player.pos + pendingRoll;
+        if (newPos > 100) newPos = player.pos;
+
+        if (ladders[newPos]) {
+          msg = `<span class="win11-accent">${player.name}</span> climbed a ladder from ${newPos} to ${ladders[newPos]}!`;
+          newPos = ladders[newPos];
+        } else if (snakes[newPos]) {
+          msg = `<span class="win11-accent">${player.name}</span> got bitten by a snake! Slide down to ${snakes[newPos]}`;
+          newPos = snakes[newPos];
+        } else if (messages[newPos]) {
+          msg = `<span class="win11-accent">${player.name}</span> on ${newPos}: ${messages[newPos]}`;
+        } else if (newPos >= 94 && newPos <= 99) {
+          msg = `<span class="win11-accent">${player.name}</span> landed on ${newPos}.`;
+        }
+
+        player.pos = newPos;
+
+        if (newPos === 100) {
+          msg = `<span class="win11-accent">${player.name}</span> reached 100 and <strong>WON</strong> the game!`;
+          setTimeout(() => {
+            alert(`${player.name} wins! Congratulations!\n\nFinal Health Tip: ${explanation || "Maintaining healthy habits leads to a happier, longer life."}`);
+          }, 100);
+        } else if (explanation) {
+          msg += `<br><span class="health-tip">Health Tip: ${explanation}</span>`;
+        }
+      } else {
+        msg = `<span class="win11-accent">${player.name}</span> answered wrong and stays at ${player.pos}`;
+        if (explanation) {
+          msg += `<br><span class="health-tip">Correct Answer: ${questions.find(q => q.explanation === explanation).a[questions.find(q => q.explanation === explanation).correct]}</span>`;
+          msg += `<br><span class="health-tip">Explanation: ${explanation}</span>`;
+        }
+      }
+
+      document.getElementById("message").innerHTML = msg;
+      updatePlayers();
+      currentPlayer = (currentPlayer + 1) % players.length;
+      updatePlayerStatus();
+    }
+
+    function updatePlayers() {
+      for (let i = 1; i <= 100; i++) {
+        document.getElementById(`p${i}`).innerHTML = "";
+      }
+      for (let player of players) {
+        const cell = document.getElementById(`p${player.pos}`);
+        if (cell && player.pos !== 0) {
+          cell.innerHTML += `<div class="player p${player.id}">P${player.id}</div>`;
+        }
+      }
+    }
+    
+    function updatePlayerStatus() {
+      const statusDiv = document.getElementById("playerStatus");
+      statusDiv.innerHTML = "";
+      
+      players.forEach((player, index) => {
+        const card = document.createElement("div");
+        card.className = `player-card ${index === currentPlayer ? 'active' : ''}`;
+        card.innerHTML = `
+          <div class="player-name p${player.id}">${player.name}</div>
+          <div class="player-pos">Position: ${player.pos}</div>
+        `;
+        statusDiv.appendChild(card);
+      });
+    }
+
+    // Initialize the game
+    window.onload = function() {
+      createBoard();
+      
+      // Add Windows 11 style splash effect
+      document.body.style.opacity = 0;
+      setTimeout(() => {
+        document.body.style.transition = 'opacity 0.5s ease-in';
+        document.body.style.opacity = 1;
+      }, 100);
+    };
+  </script>
+</body>
+</html>
