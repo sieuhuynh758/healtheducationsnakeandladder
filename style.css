@@ -1,0 +1,307 @@
+/* Windows 11 inspired design system */
+:root {
+    --win11-bg: #f3f3f3;
+    --win11-accent: #0078d4;
+    --win11-accent-hover: #106ebe;
+    --win11-card: #ffffff;
+    --win11-text: #323130;
+    --win11-border: #e5e5e5;
+    --win11-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.08), 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+    --win11-radius: 8px;
+    --win11-radius-sm: 6px;
+    --win11-radius-lg: 12px;
+    --win11-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  /* Base Styles */
+  body {
+    font-family: 'Segoe UI Variable', system-ui, -apple-system, sans-serif;
+    background: var(--win11-bg);
+    color: var(--win11-text);
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+  
+  h1 {
+    font-weight: 600;
+    font-size: 32px;
+    margin-bottom: 24px;
+    color: var(--win11-text);
+    text-align: center;
+  }
+  
+  /* Game Header */
+  .game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    background: var(--win11-card);
+    padding: 20px;
+    border-radius: var(--win11-radius-lg);
+    box-shadow: var(--win11-shadow);
+    border: 1px solid var(--win11-border);
+  }
+  
+  .game-controls {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+  
+  /* Game Board */
+  .game-board {
+    background: var(--win11-card);
+    border-radius: var(--win11-radius-lg);
+    padding: 24px;
+    box-shadow: var(--win11-shadow);
+    border: 1px solid var(--win11-border);
+    margin-bottom: 24px;
+  }
+  
+  table {
+    border-collapse: collapse;
+    margin: 0 auto;
+    border-radius: var(--win11-radius);
+    overflow: hidden;
+  }
+  
+  td {
+    width: 60px;
+    height: 60px;
+    border: 1px solid var(--win11-border);
+    text-align: center;
+    vertical-align: middle;
+    position: relative;
+    font-size: 14px;
+    font-weight: 500;
+    transition: var(--win11-transition);
+  }
+  
+  td:hover {
+    background-color: rgba(0, 120, 212, 0.05);
+  }
+  
+  /* Player Tokens */
+  .player {
+    font-size: 11px;
+    color: white;
+    padding: 3px 6px;
+    border-radius: 12px;
+    margin: 2px;
+    display: inline-block;
+    font-weight: 600;
+    min-width: 24px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  }
+  
+  .p1 { background: #e81123; }
+  .p2 { background: #0078d4; }
+  .p3 { background: #107c10; }
+  .p4 { background: #ff8c00; }
+  
+  /* Dice & Controls */
+  #dice {
+    font-size: 24px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  #roll {
+    font-weight: 600;
+    background: var(--win11-card);
+    padding: 6px 12px;
+    border-radius: var(--win11-radius-sm);
+    border: 1px solid var(--win11-border);
+    min-width: 36px;
+    text-align: center;
+  }
+  
+  button {
+    background-color: var(--win11-accent);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--win11-radius-sm);
+    font-family: 'Segoe UI Variable';
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--win11-transition);
+    box-shadow: var(--win11-shadow);
+  }
+  
+  button:hover {
+    background-color: var(--win11-accent-hover);
+    transform: translateY(-1px);
+  }
+  
+  button:active {
+    transform: translateY(0);
+  }
+  
+  /* Message Box */
+  .message {
+    font-size: 15px;
+    margin: 16px 0;
+    padding: 16px;
+    background: var(--win11-card);
+    border-radius: var(--win11-radius-lg);
+    box-shadow: var(--win11-shadow);
+    text-align: left;
+    border: 1px solid var(--win11-border);
+  }
+  
+  /* Modal Boxes */
+  .modal-box {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: none;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    background: var(--win11-card);
+    border: 1px solid var(--win11-border);
+    padding: 28px;
+    width: 500px;
+    max-width: 90%;
+    border-radius: var(--win11-radius-lg);
+    box-shadow: var(--win11-shadow);
+  }
+  
+  .close-button {
+    margin-top: 20px;
+    width: 100%;
+  }
+  
+  /* Player Status */
+  .player-status {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+  }
+  
+  .player-card {
+    background: var(--win11-card);
+    padding: 16px;
+    border-radius: var(--win11-radius);
+    box-shadow: var(--win11-shadow);
+    min-width: 140px;
+    border: 1px solid var(--win11-border);
+    transition: var(--win11-transition);
+  }
+  
+  .player-card.active {
+    border: 2px solid var(--win11-accent);
+    transform: translateY(-4px);
+  }
+  
+  .player-name {
+    font-weight: 600;
+    margin-bottom: 6px;
+    font-size: 15px;
+  }
+  
+  .player-pos {
+    font-size: 14px;
+    color: #666;
+  }
+  
+  /* Special Classes */
+  .win11-accent {
+    color: var(--win11-accent);
+    font-weight: 600;
+  }
+  
+  .ladder-start {
+    background-color: rgba(0, 120, 212, 0.08);
+  }
+  
+  .snake-start {
+    background-color: rgba(232, 17, 35, 0.08);
+  }
+  
+  .message-cell {
+    background-color: rgba(16, 124, 16, 0.08);
+  }
+  
+  .health-tip {
+    font-size: 13px;
+    color: #666;
+    margin-top: 4px;
+    font-style: italic;
+  }
+  
+  /* Animations */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .animate-fade {
+    animation: fadeIn 0.4s ease-out forwards;
+  }
+  
+  @keyframes diceRoll {
+    0% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.2); }
+    100% { transform: rotate(360deg) scale(1); }
+  }
+  
+  .dice-rolling {
+    animation: diceRoll 0.6s ease-in-out;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .game-header {
+      flex-direction: column;
+      gap: 16px;
+    }
+    
+    .player-status {
+      flex-wrap: wrap;
+    }
+    
+    td {
+      width: 40px;
+      height: 40px;
+      font-size: 12px;
+    }
+    
+    .modal-content {
+      padding: 20px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    h1 {
+      font-size: 24px;
+    }
+    
+    button {
+      padding: 8px 16px;
+      font-size: 14px;
+    }
+    
+    .player-card {
+      min-width: 120px;
+      padding: 12px;
+    }
+  }
