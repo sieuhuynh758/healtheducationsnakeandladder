@@ -1,6 +1,7 @@
 # Snake & Ladder: Healthy Lifestyle Edition
 
-![Game Screenshot](/assets/images/game-screenshot.png) <!-- Add actual screenshot -->
+![Game Screenshot]()![Screenshot 2025-05-07 170716](https://github.com/user-attachments/assets/9fd388bb-5785-4c9a-a7ca-5f9724fd2214)
+ <!-- Add actual screenshot -->
 
 An educational twist on the classic Snake & Ladder game that teaches about healthy lifestyle choices, with a focus on:
 
